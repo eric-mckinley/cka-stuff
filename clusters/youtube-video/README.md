@@ -88,3 +88,18 @@ Commercial support is available at
 </html>
 ```
 
+Verify pods running on each node
+
+ssh into a node or master, switch to root and check running docker containers.
+Should find the running nginx container along with the pod pause container.
+
+```shell script
+vagrant ssh youtube-k8s-worker-1
+
+sudo -i
+docker ps
+
+CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS              PORTS               NAMES
+d0fe97fe014a        nginx                                      "/docker-entrypoint.…"   24 minutes ago      Up 24 minutes                           k8s_nginx_example-deployment-6bb65997d8-z5pnn_default_7db5290c-6220-11eb-9593-0295c5cf8a88_0
+21a3490c40d9        gcr.io/google_containers/pause-amd64:3.0   "/pause"                 24 minutes ago      Up 24 minutes                           k8s_POD_example-deployment-6bb65997d8-z5pnn_default_7db5290c-6220-11eb-9593-0295c5cf8a88_0
+```
