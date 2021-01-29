@@ -1,6 +1,6 @@
 # Youtube Cluster
 
-[...Back](../../README.md)
+[...Back](../../)
 
 ### Deploy Cluster from Scratch
 
