@@ -1,0 +1,11 @@
+[Unit]
+Description=Kubernetes Proxy Service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kube-proxy --master=http://{{ kube_master_ip }}:8080
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target

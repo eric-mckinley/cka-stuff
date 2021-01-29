@@ -1,0 +1,11 @@
+[Unit]
+Description=Kubelet Service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kubelet --register-node --kubeconfig="/root/.kube/config"
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target

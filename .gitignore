@@ -1,0 +1,4 @@
+.idea/
+.DS_Store
+clusters/youtube-video/.vagrant
+clusters/youtube-video/*.log

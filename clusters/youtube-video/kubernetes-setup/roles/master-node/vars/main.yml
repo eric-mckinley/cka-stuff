@@ -1,0 +1,13 @@
+---
+downloads_dir: /tmp/downloads
+
+kubernetes_dir: /etc/kubernetes
+
+
+kubernetes_version: v1.9.11
+kubernetes_file: kubernetes-server-linux-amd64.tar.gz
+kubernetes_binary_download: "https://storage.googleapis.com/kubernetes-release/release/{{ kubernetes_version }}/{{ kubernetes_file }}"
+
+etcd_version: v3.2.26
+etcd_binary_download: "https://github.com/etcd-io/etcd/releases/download/{{ etcd_version }}/etcd-{{ etcd_version }}-linux-amd64.tar.gz"
+etcd_port: "2379"

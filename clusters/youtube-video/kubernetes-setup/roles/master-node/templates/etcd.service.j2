@@ -1,0 +1,11 @@
+[Unit]
+Description=ETCD Service
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/etcd --listen-client-urls http://0.0.0.0:{{ etcd_port }} --advertise-client-urls http://localhost:{{ etcd_port }}
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target

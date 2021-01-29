@@ -1,0 +1,11 @@
+---
+downloads_dir: /tmp/downloads
+
+kubernetes_dir: /etc/kubernetes
+
+
+kubernetes_version: v1.9.11
+kubernetes_file: kubernetes-server-linux-amd64.tar.gz
+kubernetes_binary_download: "https://storage.googleapis.com/kubernetes-release/release/{{ kubernetes_version }}/{{ kubernetes_file }}"
+
+kube_master_ip: "192.168.50.10"

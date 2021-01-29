@@ -1,0 +1,63 @@
+---
+
+- name: Update apt-get repo and cache
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+- name: Upgrade all apt packages
+  apt: upgrade=dist force_apt_get=yes
+
+- name: Update repositories cache and install "docker.io" package
+  apt:
+    name: docker.io
+    update_cache: yes
+
+- name: Create {{ downloads_dir }} dir 
+  file: state=directory path={{ downloads_dir }}
+
+- name: Create {{ kubernetes_dir }} dir 
+  file: state=directory path={{ kubernetes_dir }}
+
+- name: Unarchive kubernetes download
+  ansible.builtin.unarchive:
+    src: "{{ kubernetes_binary_download }}"
+    dest: "{{ downloads_dir }}"
+    remote_src: yes
+  
+- name: Copy kubernets binaries
+  copy: src={{ downloads_dir }}/kubernetes/server/bin/{{ item }} dest=/usr/bin/ remote_src=yes mode=0755
+  with_items:
+    - kubelet
+    - kubectl
+    - kube-proxy
+
+- name: Setup kube config
+  shell: |
+    kubectl config set-cluster local-k8s-config --server=http://{{ kube_master_ip }}:8080
+    kubectl config set-context local-k8s-config --cluster=local-k8s-config
+    kubectl config use-context local-k8s-config
+  args:
+    executable: /bin/bash
+
+- template:
+    src: templates/kubelet.service.j2
+    dest: /etc/systemd/system/kubelet.service
+    mode: 0644
+
+- template:
+    src: templates/kube-proxy.service.j2
+    dest: /etc/systemd/system/kube-proxy.service
+    mode: 0644
+
+- systemd:
+    name: kubelet
+    state: started
+    enabled: True    
+  retries: 3
+  delay: 3
+
+- systemd:
+    name: kube-proxy
+    state: started
+    enabled: True
+  retries: 3
+  delay: 3

@@ -1,0 +1,11 @@
+[Unit]
+Description=Kubernetes Controller Manager Service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kube-controller-manager --master=http://localhost:8080
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target
